@@ -98,7 +98,7 @@ const App = () => {
             <NavLink href="#portfolio" text="Portfolio" onClick={() => setIsNavOpen(false)} />
             <NavLink href="#contact" text="Contact" onClick={() => setIsNavOpen(false)} />
             <a
-              href="my-portfolio/blob/main/src/assets/document/Resume202505171036.pdf" // !!! REPLACE THIS WITH YOUR RESUME'S ACTUAL URL !!!
+              href="/Smit Jaiswal Resume Bi Projects.docx" // !!! REPLACE THIS WITH YOUR RESUME'S ACTUAL URL !!!
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center bg-indigo-500 text-white font-semibold py-2 px-4 rounded-full shadow-md hover:bg-indigo-600 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -119,7 +119,7 @@ const App = () => {
               <NavLink href="#portfolio" text="Portfolio" onClick={() => setIsNavOpen(false)} />
               <NavLink href="#contact" text="Contact" onClick={() => setIsNavOpen(false)} />
               <a
-                href="src\assets\document\Resume202505171036.pdf" // !!! REPLACE THIS WITH YOUR RESUME'S ACTUAL URL !!!
+                href="Smit Jaiswal Resume Bi Projects.docx" // !!! REPLACE THIS WITH YOUR RESUME'S ACTUAL URL !!!
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center bg-indigo-500 text-white font-semibold py-2 px-4 rounded-full shadow-md hover:bg-indigo-600 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
