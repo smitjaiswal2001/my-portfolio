@@ -168,7 +168,7 @@ const App = () => {
             <div className="md:w-1/3 mb-8 md:mb-0 flex justify-center">
               {/* Your professional photo */}
               <img
-                src="src\assets\images\Profile_photo.JPG" // Your uploaded image URL
+                src="public/Profile_photo.JPG" // Your uploaded image URL
                 alt="Smit Jaiswal's Professional Photo"
                 className="rounded-full shadow-xl border-4 border-indigo-200 w-64 h-64 md:w-80 md:h-80 object-cover object-top" // Adjusted object-fit and object-position
               />
