@@ -248,30 +248,6 @@ const App = () => {
               platform="Power BI"
             />
 
-            {/* Project Card 3: Tableau - Sample Superstore Sales */}
-            <ProjectCard
-              title="Superstore Sales (Tableau)"
-              description="An interactive Tableau dashboard analyzing sales and profit trends across different regions and product categories from the Superstore dataset."
-              dashboardUrl="https://public.tableau.com/views/Superstore_16788939999990/Overview?:language=en-US&publish=yes&:sid=&:display_count=n&:origin=viz_share_link" // Example Tableau Public URL
-              platform="Tableau"
-            />
-
-            {/* Project Card 4: Power BI - HR Analytics (Placeholder) */}
-            <ProjectCard
-              title="HR Analytics (Power BI)"
-              description="Visualized employee demographics, turnover rates, and recruitment metrics to support human resources strategic planning."
-              dashboardUrl="https://app.powerbi.com/view?r=eyJrIjoiZmYyYjY2YjAtYzYwMC00Y2QxLWIxZjMtOTYwZTA4YjU3ZjY1IiwidCI6IjY3ZmM3YjY5LTc5NjQtNDQzOC04ZjkzLWQ2YjA5YjA3YjEwMCIsImMiOjZ9" // Placeholder URL
-              platform="Power BI"
-            />
-
-            {/* Project Card 5: Tableau - Another Tableau Dashboard (Placeholder) */}
-            <ProjectCard
-              title="Another Tableau Dashboard"
-              description="A sample Tableau project showcasing advanced visualization techniques and data storytelling."
-              dashboardUrl="https://public.tableau.com/views/RegionalSampleWorkbook/Storms?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link" // Another example Tableau Public URL
-              platform="Tableau"
-            />
-
             {/* Add more Project Cards as needed */}
           </div>
         </div>
