@@ -178,7 +178,7 @@ const App = () => {
                 I am a passionate and results-driven Data Analyst with a strong focus on transforming raw data into actionable insights. My expertise lies in leveraging Power BI to create dynamic, interactive, and visually compelling dashboards that empower data-driven decision-making.
               </p>
               <p className="mb-4">
-                With a background in [Your Field/Education], I excel at data cleaning, modeling, and visualization. I am proficient in [list key tools like SQL, Excel, Python/R (mention if applicable), Power Query, DAX]. My goal is to bridge the gap between complex data and clear, understandable narratives.
+                With a background in Data Analytics, I excel at data cleaning, modeling, and visualization. I am proficient in key tools such as SQL, Excel, Python, Power Query, and DAX. My goal is to bridge the gap between complex data and clear, understandable narratives.
               </p>
               <p>
                 I am constantly exploring new tools and techniques to enhance my analytical capabilities and deliver impactful solutions.
@@ -215,17 +215,6 @@ const App = () => {
                 <li>Worked with cross-functional teams (designers, project managers, QA) and contributed to project success.</li>
                 <li> Identified and resolved technical issues promptly, ensuring minimal disruption to project timelines.</li>
                 <li>Proficient in various software development tools and platforms, staying updated with industry trends.</li>
-              </ul>
-            </div>
-
-            {/* Experience Item 2 */}
-            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-              <h3 className="text-xl font-semibold text-gray-900">Junior Business Intelligence Analyst</h3>
-              <p className="text-indigo-600 font-medium">XYZ Corp. | Jul 2022 - Dec 2022</p>
-              <ul className="list-disc list-inside text-gray-700 mt-3 space-y-2">
-                <li>Assisted in the creation of monthly and quarterly business reports using Excel and Power BI.</li>
-                <li>Performed ad-hoc data analysis to support various departmental needs.</li>
-                <li>Gained foundational experience in data extraction and reporting tools.</li>
               </ul>
             </div>
             {/* Add more experience items as needed */}
