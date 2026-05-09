@@ -217,6 +217,18 @@ const App = () => {
                 <li>Proficient in various software development tools and platforms, staying updated with industry trends.</li>
               </ul>
             </div>
+            {/* Experience Item 2 */}
+            <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+              <h3 className="text-xl font-semibold text-gray-900">Data Engineer Intern</h3>
+              <p className="text-indigo-600 font-medium">Mayk Ideas | Internship</p>
+              <ul className="list-disc list-inside text-gray-700 mt-3 space-y-2">
+                <li>Led the "Inventory Tracking Asset and Service Modernization Project," delivering end-to-end Power BI dashboards with Team & Manager views.</li>
+                <li>Integrated real-time data using Microsoft Dataverse, ensuring seamless data connectivity across systems.</li>
+                <li>Built DAX-based KPIs and advanced analytics to support data-driven decision-making.</li>
+                <li>Created wireframes, Entity Relationship Diagrams (ERD), and structured technical documentation.</li>
+                <li>Solved real-world challenges including data connectivity issues and system integration complexities.</li>
+              </ul>
+            </div>
             {/* Add more experience items as needed */}
           </div>
         </div>
