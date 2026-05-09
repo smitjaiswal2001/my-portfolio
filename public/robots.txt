@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://smitjaiswaldev-smitjaiswal2001s-projects.vercel.app/sitemap.xml
