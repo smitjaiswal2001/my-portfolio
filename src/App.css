@@ -432,3 +432,199 @@ footer p { font-size: 12px; color: var(--subtle); letter-spacing: 0.05em; }
   .btn-primary, .btn-ghost { justify-content: center; }
   footer { flex-direction: column; text-align: center; }
 }
+
+/* ══════════════════════════════════════════════════
+   LIGHT MODE — CSS variable overrides
+══════════════════════════════════════════════════ */
+[data-theme="light"] {
+  --bg:           #F5F4F0;
+  --surface:      #ECEAE4;
+  --card:         #FFFFFF;
+  --border:       #D8D4C8;
+  --border-hover: #B8B0A0;
+  --gold:         #9A6F1E;
+  --gold-lt:      #B8851A;
+  --teal:         #007A6A;
+  --text:         #1A1A1A;
+  --muted:        #5A5248;
+  --subtle:       #9A9080;
+}
+
+[data-theme="light"] .grid-bg {
+  background-image:
+    linear-gradient(#C8C4B8 1px, transparent 1px),
+    linear-gradient(90deg, #C8C4B8 1px, transparent 1px);
+  opacity: 0.25;
+}
+
+[data-theme="light"] .nav {
+  background: rgba(245, 244, 240, 0.92);
+}
+
+[data-theme="light"] .nav-drawer {
+  background: rgba(245, 244, 240, 0.98);
+}
+
+[data-theme="light"] .about-img { filter: none; }
+
+[data-theme="light"] .stat-card.stack .stat-num { color: var(--teal); }
+
+/* ══════════════════════════════════════════════════
+   SPLASH SCREEN
+══════════════════════════════════════════════════ */
+.splash {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--bg);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 16px;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.splash-fade { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.splash-logo {
+  animation: splash-pop 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes splash-pop {
+  0%   { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+
+.splash-name {
+  font-family: var(--font-serif); font-size: 28px; font-weight: 600;
+  color: var(--text); letter-spacing: 0.04em;
+  animation: splash-up 0.5s 0.2s ease both;
+}
+.splash-title {
+  font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold);
+  animation: splash-up 0.5s 0.35s ease both;
+}
+@keyframes splash-up {
+  0%   { transform: translateY(12px); opacity: 0; }
+  100% { transform: translateY(0);    opacity: 1; }
+}
+
+.splash-bar {
+  width: 160px; height: 1px; background: var(--border);
+  margin-top: 24px; overflow: hidden;
+  animation: splash-up 0.4s 0.4s ease both;
+}
+.splash-fill {
+  height: 100%; background: var(--gold);
+  animation: splash-load 1.4s 0.5s cubic-bezier(0.4,0,0.2,1) both;
+}
+@keyframes splash-load {
+  0%   { width: 0%; }
+  100% { width: 100%; }
+}
+
+/* ══════════════════════════════════════════════════
+   SCROLL PROGRESS BAR
+══════════════════════════════════════════════════ */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 2px; z-index: 999; background: transparent;
+  pointer-events: none;
+}
+.scroll-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+  transition: width 0.08s linear;
+  box-shadow: 0 0 8px var(--gold);
+}
+
+/* ══════════════════════════════════════════════════
+   RESUME MODAL
+══════════════════════════════════════════════════ */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  animation: modal-fade-in 0.2s ease;
+}
+@keyframes modal-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modal-box {
+  background: var(--card); border: 1px solid var(--border);
+  width: 100%; max-width: 860px;
+  max-height: 90vh; display: flex; flex-direction: column;
+  animation: modal-slide-up 0.25s cubic-bezier(0.34,1.2,0.64,1);
+}
+@keyframes modal-slide-up {
+  from { transform: translateY(24px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.modal-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 28px; border-bottom: 1px solid var(--border); flex-shrink: 0;
+}
+.modal-eyebrow {
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 4px;
+}
+.modal-name { font-family: var(--font-serif); font-size: 20px; font-weight: 400; color: var(--text); }
+
+.modal-actions { display: flex; align-items: center; gap: 12px; }
+
+.modal-download {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--gold); color: var(--bg);
+  padding: 9px 20px; font-size: 11px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  transition: background 0.2s; border: none; cursor: pointer;
+  font-family: var(--font-sans);
+}
+.modal-download:hover { background: var(--gold-lt); }
+
+.modal-close {
+  width: 36px; height: 36px;
+  border: 1px solid var(--border); background: none;
+  color: var(--muted); font-size: 16px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.modal-close:hover { border-color: var(--gold); color: var(--gold); }
+
+.modal-body { flex: 1; overflow: hidden; min-height: 0; }
+.modal-iframe {
+  width: 100%; height: 100%; min-height: 540px;
+  border: none; display: block;
+  background: var(--surface);
+}
+
+/* ══════════════════════════════════════════════════
+   THEME TOGGLE BUTTON
+══════════════════════════════════════════════════ */
+.theme-toggle {
+  width: 38px; height: 38px;
+  border: 1px solid var(--border); background: none;
+  color: var(--muted); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s; flex-shrink: 0;
+}
+.theme-toggle:hover { border-color: var(--gold); color: var(--gold); }
+
+/* NAV RIGHT groups */
+.nav-right {
+  display: flex; align-items: center; gap: 10px;
+}
+.nav-right-mobile {
+  display: none; align-items: center; gap: 8px;
+}
+
+@media (max-width: 900px) {
+  .nav-right       { display: none; }
+  .nav-right-mobile { display: flex; }
+}
+
+@media (max-width: 600px) {
+  .modal-box { max-height: 95vh; }
+  .modal-head { padding: 16px 20px; flex-wrap: wrap; gap: 12px; }
+  .modal-iframe { min-height: 420px; }
+}

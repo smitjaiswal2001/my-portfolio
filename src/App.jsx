@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 /* ─── CONSTANTS ─────────────────────────────────── */
-const RESUME_FILE = '/Smit Jaiswal Resume Bi Projects.docx';
-const LINKEDIN    = 'https://www.linkedin.com/in/smit-jaiswal-988360238/';
-const GITHUB      = 'https://github.com/smitjaiswal2001';
-const EMAIL       = 'smitjaiswal2001@gmail.com';
+const RESUME_FILE  = '/Smit Jaiswal Resume Bi Projects.docx';
+const RESUME_URL   = 'https://smitjaiswaldev-smitjaiswal2001s-projects.vercel.app/Smit%20Jaiswal%20Resume%20Bi%20Projects.docx';
+const GDOCS_PREVIEW = `https://docs.google.com/viewer?url=${encodeURIComponent(RESUME_URL)}&embedded=true`;
+const LINKEDIN     = 'https://www.linkedin.com/in/smit-jaiswal-988360238/';
+const GITHUB       = 'https://github.com/smitjaiswal2001';
+const EMAIL        = 'smitjaiswal2001@gmail.com';
 
 const NAV_LINKS = [
   { label: 'About',      href: '#about'      },
@@ -14,9 +16,9 @@ const NAV_LINKS = [
 ];
 
 const SKILLS = [
-  'Power BI', 'DAX', 'Power Query', 'SQL', 'Python',
-  'Microsoft Dataverse', 'Excel', 'Data Modeling',
-  'ETL Pipelines', 'ERD Design', 'Data Storytelling',
+  'Power BI','DAX','Power Query','SQL','Python',
+  'Microsoft Dataverse','Excel','Data Modeling',
+  'ETL Pipelines','ERD Design','Data Storytelling',
 ];
 
 const EXPERIENCES = [
@@ -54,35 +56,189 @@ const PROJECTS = [
     title: 'Credit Card Analysis',
     desc: 'Executive-level analysis of credit card data revealing spending patterns, risk factors, and customer segmentation for strategic financial decisions.',
     href: 'https://app.powerbi.com/reportEmbed?reportId=cdafcf5c-4404-4232-9c97-73711834704c&autoAuth=true&embeddedDemo=true',
-    cta: 'View Dashboard',
-    external: true,
+    cta: 'View Dashboard', external: true,
   },
   {
     platform: 'Power BI · Operations',
     title: 'Warehouse Inventory Tracker',
     desc: 'Real-time operations dashboard monitoring inventory levels, stock movement, and supply chain KPIs — optimizing efficiency for Warehouse A2.',
     href: 'https://app.powerbi.com/reportEmbed?reportId=a5abbf0f-cde7-46c4-a629-5e11ab20e9b6&autoAuth=true&embeddedDemo=true',
-    cta: 'View Dashboard',
-    external: true,
+    cta: 'View Dashboard', external: true,
   },
   {
     platform: 'Microsoft Dataverse · Power BI',
     title: 'Inventory & Asset Modernization',
     desc: 'Enterprise solution with Team & Manager views, real-time Dataverse integration, DAX KPIs, and full ERD documentation — built at Mayk Ideas.',
-    href: null,
-    cta: 'Internal Project',
-    external: false,
+    href: null, cta: 'Internal Project', external: false,
   },
   {
     platform: 'Open to Opportunities',
     title: 'Your Next Data Challenge',
     desc: "Looking for a data analyst who delivers clarity from complexity? Let's discuss how I can add value to your team.",
-    href: `mailto:${EMAIL}`,
-    cta: 'Start a Conversation →',
-    external: false,
-    highlight: true,
+    href: `mailto:${EMAIL}`, cta: 'Start a Conversation →', external: false, highlight: true,
   },
 ];
+
+/* ══════════════════════════════════════════════════
+   1. SPLASH / LOADING SCREEN
+══════════════════════════════════════════════════ */
+function Splash({ onDone }) {
+  const [fading, setFading] = useState(false);
+
+  useEffect(() => {
+    const t1 = setTimeout(() => setFading(true), 1600);
+    const t2 = setTimeout(() => onDone(), 2100);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [onDone]);
+
+  return (
+    <div className={`splash${fading ? ' splash-fade' : ''}`} aria-hidden="true">
+      <div className="splash-logo">
+        <svg viewBox="0 0 80 80" width="72" height="72">
+          <rect width="80" height="80" rx="10" fill="#C4943A" />
+          <text x="40" y="58" fontFamily="Georgia,serif" fontSize="52" fontWeight="700"
+            textAnchor="middle" fill="#07090F">S</text>
+        </svg>
+      </div>
+      <div className="splash-name">Smit Jaiswal</div>
+      <div className="splash-title">Senior Data Analyst</div>
+      <div className="splash-bar"><div className="splash-fill" /></div>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════
+   2. SCROLL PROGRESS BAR
+══════════════════════════════════════════════════ */
+function ScrollProgress() {
+  const [pct, setPct] = useState(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const el   = document.documentElement;
+      const top  = el.scrollTop  || document.body.scrollTop;
+      const full = el.scrollHeight - el.clientHeight;
+      setPct(full > 0 ? (top / full) * 100 : 0);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  return (
+    <div className="scroll-progress" aria-hidden="true">
+      <div className="scroll-progress-fill" style={{ width: `${pct}%` }} />
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════
+   3. RESUME PREVIEW MODAL
+══════════════════════════════════════════════════ */
+function ResumeModal({ open, onClose }) {
+  // Lock body scroll while open
+  useEffect(() => {
+    if (open) document.body.style.overflow = 'hidden';
+    else      document.body.style.overflow = '';
+    return () => { document.body.style.overflow = ''; };
+  }, [open]);
+
+  // Close on Escape
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
+
+  if (!open) return null;
+
+  return (
+    <div className="modal-overlay" onClick={onClose} role="dialog" aria-modal="true" aria-label="Resume Preview">
+      <div className="modal-box" onClick={e => e.stopPropagation()}>
+        {/* Header */}
+        <div className="modal-head">
+          <div>
+            <div className="modal-eyebrow">Resume Preview</div>
+            <div className="modal-name">Smit Jaiswal — Data Analyst</div>
+          </div>
+          <div className="modal-actions">
+            <a
+              href={RESUME_FILE}
+              download="Smit_Jaiswal_Resume.docx"
+              className="modal-download"
+              onClick={onClose}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="15" height="15">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+              </svg>
+              Download
+            </a>
+            <button className="modal-close" onClick={onClose} aria-label="Close">✕</button>
+          </div>
+        </div>
+        {/* Preview iframe via Google Docs viewer */}
+        <div className="modal-body">
+          <iframe
+            src={GDOCS_PREVIEW}
+            title="Resume Preview"
+            className="modal-iframe"
+            allow="fullscreen"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════
+   4. THEME TOGGLE (Dark / Light)
+══════════════════════════════════════════════════ */
+function useTheme() {
+  const [dark, setDark] = useState(() => {
+    const saved = localStorage.getItem('theme');
+    if (saved) return saved === 'dark';
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+  }, [dark]);
+
+  return [dark, () => setDark(d => !d)];
+}
+
+function ThemeToggle({ dark, toggle }) {
+  return (
+    <button
+      className="theme-toggle"
+      onClick={toggle}
+      aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+      title={dark ? 'Light mode' : 'Dark mode'}
+    >
+      {dark ? (
+        /* Sun icon */
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"
+          strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      ) : (
+        /* Moon icon */
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"
+          strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+        </svg>
+      )}
+    </button>
+  );
+}
 
 /* ─── TYPEWRITER ─────────────────────────────────── */
 function Typewriter({ words, speed = 110, pause = 1800 }) {
@@ -112,130 +268,109 @@ function Typewriter({ words, speed = 110, pause = 1800 }) {
     <span>
       {display}
       <span style={{ opacity: 0.7, animation: 'blink 1s step-end infinite' }}>|</span>
-      <style>{`@keyframes blink { 0%,100%{opacity:0.7} 50%{opacity:0} }`}</style>
+      <style>{`@keyframes blink{0%,100%{opacity:.7}50%{opacity:0}}`}</style>
     </span>
   );
 }
 
 /* ─── NAV ────────────────────────────────────────── */
-function Nav({ activeSection }) {
-  const [menuOpen, setMenuOpen] = useState(false);
+function Nav({ activeSection, dark, toggleTheme, onResumeClick }) {
+  const [menuOpen, setMenuOpen]  = useState(false);
   const [scrolled, setScrolled]  = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    const fn = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', fn, { passive: true });
+    return () => window.removeEventListener('scroll', fn);
   }, []);
 
-  // Close mobile menu on resize to desktop
   useEffect(() => {
-    const onResize = () => { if (window.innerWidth > 900) setMenuOpen(false); };
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
+    const fn = () => { if (window.innerWidth > 900) setMenuOpen(false); };
+    window.addEventListener('resize', fn);
+    return () => window.removeEventListener('resize', fn);
   }, []);
 
-  const handleNavClick = useCallback((e, href) => {
-    e.preventDefault();
-    setMenuOpen(false);
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const handleNav = useCallback((e, href) => {
+    e.preventDefault(); setMenuOpen(false);
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, []);
 
   return (
     <>
       <nav className={`nav${scrolled ? ' scrolled' : ''}`}>
-        <a href="#home" className="nav-logo" onClick={e => handleNavClick(e, '#home')}>
+        <a href="#home" className="nav-logo" onClick={e => handleNav(e, '#home')}>
           Smit<span>.</span>
         </a>
 
-        {/* Desktop links */}
         <div className="nav-links">
           {NAV_LINKS.map(({ label, href }) => (
-            <a
-              key={href}
-              href={href}
+            <a key={href} href={href}
               className={activeSection === href.slice(1) ? 'active' : ''}
-              onClick={e => handleNavClick(e, href)}
-            >
+              onClick={e => handleNav(e, href)}>
               {label}
             </a>
           ))}
         </div>
 
-        <a
-          href={RESUME_FILE}
-          download="Smit_Jaiswal_Resume.docx"
-          className="nav-cta"
-          aria-label="Download resume"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
-          </svg>
-          Download CV
-        </a>
+        <div className="nav-right">
+          <ThemeToggle dark={dark} toggle={toggleTheme} />
+          <button className="nav-cta" onClick={onResumeClick} aria-label="Preview and download resume">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"
+              strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+            </svg>
+            Download CV
+          </button>
+        </div>
 
-        <button
-          className={`nav-hamburger${menuOpen ? ' open' : ''}`}
-          onClick={() => setMenuOpen(o => !o)}
-          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-          aria-expanded={menuOpen}
-        >
-          <span /><span /><span />
-        </button>
+        <div className="nav-right-mobile">
+          <ThemeToggle dark={dark} toggle={toggleTheme} />
+          <button className={`nav-hamburger${menuOpen ? ' open' : ''}`}
+            onClick={() => setMenuOpen(o => !o)}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen}>
+            <span /><span /><span />
+          </button>
+        </div>
       </nav>
 
-      {/* Mobile drawer */}
       <div className={`nav-drawer${menuOpen ? ' open' : ''}`} role="navigation">
         {NAV_LINKS.map(({ label, href }) => (
-          <a key={href} href={href} onClick={e => handleNavClick(e, href)}>{label}</a>
+          <a key={href} href={href} onClick={e => handleNav(e, href)}>{label}</a>
         ))}
-        <a
-          href={RESUME_FILE}
-          download="Smit_Jaiswal_Resume.docx"
-          className="nav-cta"
-          onClick={() => setMenuOpen(false)}
-        >
+        <button className="nav-cta" onClick={() => { setMenuOpen(false); onResumeClick(); }}>
           Download CV
-        </a>
+        </button>
       </div>
     </>
   );
 }
 
 /* ─── HERO ───────────────────────────────────────── */
-function Hero() {
-  const scrollTo = (id) => {
-    document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
-  };
+function Hero({ onResumeClick }) {
   return (
     <section id="home" className="hero">
       <div className="hero-left">
         <div className="hero-eyebrow">
           <div className="ln" />
           <span>
-            <Typewriter words={['Senior Data Analyst', 'Power BI Specialist', 'Data Engineer', 'BI Storyteller']} />
+            <Typewriter words={['Senior Data Analyst','Power BI Specialist','Data Engineer','BI Storyteller']} />
           </span>
         </div>
-        <h1 className="hero-name">
-          <strong>Smit</strong>
-          Jaiswal
-        </h1>
+        <h1 className="hero-name"><strong>Smit</strong>Jaiswal</h1>
         <p className="hero-subtitle">
-          Power BI · DAX · Data Engineering<br />
-          Business Intelligence · Storytelling
+          Power BI · DAX · Data Engineering<br />Business Intelligence · Storytelling
         </p>
         <p className="hero-desc">
-          Transforming complex datasets into decisive insights. Specializing in
-          Power BI dashboards, advanced DAX analytics, and enterprise-grade data pipelines
-          that empower organizations to move faster.
+          Transforming complex datasets into decisive insights. Specializing in Power BI
+          dashboards, advanced DAX analytics, and enterprise-grade data pipelines.
         </p>
         <div className="hero-actions">
-          <button className="btn-primary" onClick={() => scrollTo('#work')}>
+          <button className="btn-primary"
+            onClick={() => document.querySelector('#work')?.scrollIntoView({ behavior: 'smooth' })}>
             View My Work
           </button>
-          <button className="btn-ghost" onClick={() => scrollTo('#contact')}>
-            Get in Touch
+          <button className="btn-ghost" onClick={onResumeClick}>
+            Preview Resume
           </button>
         </div>
       </div>
@@ -247,20 +382,13 @@ function Hero() {
           <polyline points="0,470 60,440 120,455 180,310 240,360 300,230 360,280 420,170 480,230 540,140 600,180"
             fill="none" stroke="#00BFA5" strokeWidth="1"/>
         </svg>
-
         <div className="stat-card">
           <div className="stat-num">3+</div>
           <div className="stat-lbl">Years of Industry Experience</div>
         </div>
         <div className="stat-row">
-          <div className="stat-card sm">
-            <div className="stat-num">10+</div>
-            <div className="stat-lbl">Dashboards Built</div>
-          </div>
-          <div className="stat-card sm">
-            <div className="stat-num">5+</div>
-            <div className="stat-lbl">Tools Mastered</div>
-          </div>
+          <div className="stat-card sm"><div className="stat-num">10+</div><div className="stat-lbl">Dashboards Built</div></div>
+          <div className="stat-card sm"><div className="stat-num">5+</div><div className="stat-lbl">Tools Mastered</div></div>
         </div>
         <div className="stat-card stack">
           <div className="stat-num">Power BI · SQL · Python<br />Dataverse · DAX</div>
@@ -285,35 +413,15 @@ function About() {
         </h2>
         <div className="about-grid">
           <div className="about-img-wrap">
-            {imgError ? (
-              <div className="about-img-placeholder">Photo Unavailable</div>
-            ) : (
-              <img
-                src="/Profile_photo.JPG"
-                alt="Smit Jaiswal"
-                className="about-img"
-                onError={() => setImgError(true)}
-              />
-            )}
+            {imgError
+              ? <div className="about-img-placeholder">Photo Unavailable</div>
+              : <img src="/Profile_photo.JPG" alt="Smit Jaiswal" className="about-img" onError={() => setImgError(true)} />}
             <div className="about-tag">Smit Jaiswal · Data Analyst</div>
           </div>
           <div className="about-text">
-            <p>
-              I'm a results-driven Data Analyst with a strong foundation in transforming raw,
-              complex data into actionable business intelligence. My work centers on Power BI,
-              DAX, and data modeling — building solutions that empower organizations to make
-              faster, smarter decisions.
-            </p>
-            <p>
-              From designing interactive dashboards to architecting real-time data pipelines
-              using Microsoft Dataverse, I bring both technical depth and a strategic mindset
-              to every project.
-            </p>
-            <p>
-              My background in software development gives me a rare ability to bridge the gap
-              between engineering and analytics — understanding both the data infrastructure
-              and the business impact it drives.
-            </p>
+            <p>I'm a results-driven Data Analyst with a strong foundation in transforming raw, complex data into actionable business intelligence. My work centers on Power BI, DAX, and data modeling — building solutions that empower organizations to make faster, smarter decisions.</p>
+            <p>From designing interactive dashboards to architecting real-time data pipelines using Microsoft Dataverse, I bring both technical depth and a strategic mindset to every project.</p>
+            <p>My background in software development gives me a rare ability to bridge the gap between engineering and analytics — understanding both the data infrastructure and the business impact it drives.</p>
             <div className="skills-wrap">
               <div className="skills-label">Technical Stack</div>
               <div className="skills-grid">
@@ -339,7 +447,7 @@ function Experience() {
           Where I've<br /><em>made impact</em>
         </h2>
         <div className="exp-list">
-          {EXPERIENCES.map((exp) => (
+          {EXPERIENCES.map(exp => (
             <div key={exp.role} className={`exp-card${exp.highlight ? ' highlight' : ''}`}>
               <div className="exp-head">
                 <div>
@@ -371,23 +479,14 @@ function Projects() {
           Dashboards built<br /><em>to decide</em>
         </h2>
         <div className="projects-grid">
-          {PROJECTS.map((p) => (
+          {PROJECTS.map(p => (
             <div key={p.title} className={`proj-card${p.highlight ? ' highlight-card' : ''}`}>
               <div className="proj-platform">{p.platform}</div>
               <h3 className={`proj-title${p.highlight ? ' dim' : ''}`}>{p.title}</h3>
               <p className="proj-desc">{p.desc}</p>
-              {p.href ? (
-                <a
-                  href={p.href}
-                  className="proj-link"
-                  target={p.external ? '_blank' : undefined}
-                  rel={p.external ? 'noopener noreferrer' : undefined}
-                >
-                  {p.cta}
-                </a>
-              ) : (
-                <span className="proj-link dim">{p.cta}</span>
-              )}
+              {p.href
+                ? <a href={p.href} className="proj-link" target={p.external ? '_blank' : undefined} rel={p.external ? 'noopener noreferrer' : undefined}>{p.cta}</a>
+                : <span className="proj-link dim">{p.cta}</span>}
             </div>
           ))}
         </div>
@@ -397,7 +496,7 @@ function Projects() {
 }
 
 /* ─── CONTACT ────────────────────────────────────── */
-function Contact() {
+function Contact({ onResumeClick }) {
   return (
     <section id="contact" className="contact-section">
       <div className="section-inner">
@@ -409,20 +508,13 @@ function Contact() {
             Let's build<br /><em>something great</em>
           </h2>
           <p className="contact-desc">
-            Open to full-time roles, freelance projects, and collaborations in
-            data analytics and business intelligence.
+            Open to full-time roles, freelance projects, and collaborations in data analytics and business intelligence.
           </p>
           <a href={`mailto:${EMAIL}`} className="contact-email">{EMAIL}</a>
           <div className="social-row">
-            <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" className="social-link">
-              LinkedIn ↗
-            </a>
-            <a href={GITHUB} target="_blank" rel="noopener noreferrer" className="social-link">
-              GitHub ↗
-            </a>
-            <a href={RESUME_FILE} download="Smit_Jaiswal_Resume.docx" className="social-link">
-              Download CV ↓
-            </a>
+            <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" className="social-link">LinkedIn ↗</a>
+            <a href={GITHUB}   target="_blank" rel="noopener noreferrer" className="social-link">GitHub ↗</a>
+            <button className="social-link" onClick={onResumeClick}>Download CV ↓</button>
           </div>
         </div>
       </div>
@@ -434,34 +526,34 @@ function Contact() {
 function ScrollTop() {
   const [visible, setVisible] = useState(false);
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > 400);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    const fn = () => setVisible(window.scrollY > 400);
+    window.addEventListener('scroll', fn, { passive: true });
+    return () => window.removeEventListener('scroll', fn);
   }, []);
   return (
-    <button
-      className={`scroll-top${visible ? ' visible' : ''}`}
+    <button className={`scroll-top${visible ? ' visible' : ''}`}
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      aria-label="Scroll to top"
-    >
-      ↑
-    </button>
+      aria-label="Scroll to top">↑</button>
   );
 }
 
-/* ─── ROOT APP ───────────────────────────────────── */
+/* ══════════════════════════════════════════════════
+   ROOT APP
+══════════════════════════════════════════════════ */
 export default function App() {
+  const [splashDone, setSplashDone]     = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [modalOpen, setModalOpen]       = useState(false);
+  const [dark, toggleTheme]             = useTheme();
 
-  // Track active section with IntersectionObserver
+  const openResume  = useCallback(() => setModalOpen(true),  []);
+  const closeResume = useCallback(() => setModalOpen(false), []);
+
+  // Track active section
   useEffect(() => {
-    const sections = document.querySelectorAll('section[id]');
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) setActiveSection(entry.target.id);
-        });
-      },
+    const sections  = document.querySelectorAll('section[id]');
+    const observer  = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) setActiveSection(e.target.id); }),
       { rootMargin: '-40% 0px -55% 0px' }
     );
     sections.forEach(s => observer.observe(s));
@@ -470,20 +562,38 @@ export default function App() {
 
   return (
     <>
+      {/* Splash screen — shows first, then fades */}
+      {!splashDone && <Splash onDone={() => setSplashDone(true)} />}
+
       <div className="grid-bg" aria-hidden="true" />
-      <Nav activeSection={activeSection} />
+
+      {/* Gold scroll progress bar */}
+      <ScrollProgress />
+
+      <Nav
+        activeSection={activeSection}
+        dark={dark}
+        toggleTheme={toggleTheme}
+        onResumeClick={openResume}
+      />
+
       <main>
-        <Hero />
+        <Hero onResumeClick={openResume} />
         <About />
         <Experience />
         <Projects />
-        <Contact />
+        <Contact onResumeClick={openResume} />
       </main>
+
       <footer>
         <p>© {new Date().getFullYear()} Smit Jaiswal. All rights reserved.</p>
         <p>Power BI · Data Analytics · Business Intelligence</p>
       </footer>
+
       <ScrollTop />
+
+      {/* Resume preview modal */}
+      <ResumeModal open={modalOpen} onClose={closeResume} />
     </>
   );
 }
