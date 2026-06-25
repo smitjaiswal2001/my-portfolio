@@ -10,6 +10,7 @@ const EMAIL        = 'smitjaiswal2001@gmail.com';
 
 const NAV_LINKS = [
   { label: 'About',      href: '#about'      },
+  { label: 'Education',  href: '#education'  },
   { label: 'Experience', href: '#experience' },
   { label: 'Work',       href: '#work'        },
   { label: 'Contact',    href: '#contact'    },
@@ -28,11 +29,11 @@ const EXPERIENCES = [
     period: 'Internship',
     highlight: true,
     bullets: [
-      'Led the "Inventory Tracking Asset & Service Modernization Project" — delivered end-to-end Power BI dashboards with dedicated Team & Manager views.',
-      'Integrated real-time data using Microsoft Dataverse, ensuring seamless connectivity across enterprise systems.',
-      'Built DAX-based KPIs and advanced analytics models to power data-driven executive decision-making.',
-      'Created wireframes, Entity Relationship Diagrams (ERD), and full structured technical documentation.',
-      'Resolved complex data connectivity and system integration challenges in a live production environment.',
+      'Delivered an end-to-end Power BI solution for the Inventory Tracking & Asset Modernization project — built dedicated Team and Manager views used daily by 10–12 team members.',
+      'Integrated real-time data pipelines using Microsoft Dataverse, eliminating manual data entry and reducing reporting lag to near-zero across enterprise systems.',
+      'Authored 15+ DAX measures tracking KPIs including stock turnover rate, asset utilization, and service SLAs — directly informing executive decision-making.',
+      'Produced full technical documentation including wireframes, ERDs, and data dictionaries — enabling seamless handoff and onboarding for the client team.',
+      'Diagnosed and resolved critical data connectivity failures in a live production environment, restoring full dashboard availability within the same sprint.',
     ],
   },
   {
@@ -41,11 +42,11 @@ const EXPERIENCES = [
     period: 'Jan 2022 — Dec 2024',
     highlight: false,
     bullets: [
-      'Designed, coded, tested, and debugged software applications while adhering to industry best practices.',
-      'Conducted thorough project requirement analyses and proposed effective technical solutions.',
-      'Collaborated with cross-functional teams including designers, project managers, and QA engineers.',
-      'Identified and resolved technical issues promptly, minimizing disruption to project timelines.',
-      'Maintained proficiency across multiple development platforms, staying current with industry trends.',
+      'Designed, developed, and shipped production software applications over a 3-year tenure across multiple client projects.',
+      'Led requirement analysis sessions with stakeholders to translate business needs into precise technical specifications.',
+      'Collaborated in cross-functional teams of designers, PMs, and QA engineers — consistently delivering within sprint deadlines.',
+      'Identified and resolved recurring technical issues, reducing bug reopen rates and improving release stability.',
+      'Maintained active proficiency across multiple platforms and frameworks, adapting quickly to project-specific tech stacks.',
     ],
   },
 ];
@@ -77,12 +78,6 @@ const PROJECTS = [
     desc: 'Capstone research dashboard analyzing the impact of Canadian permanent residency admissions on macroeconomic performance (2015–2025). Includes VAR modeling, K-Means clustering, Random Forest, and XGBoost across national and provincial datasets.',
     href: 'https://canada-pr-economic-dashboard-o5br5gcpn2qvitwjwg73qb.streamlit.app/',
     cta: 'View Dashboard', external: true,
-  },
-  {
-    platform: 'Open to Opportunities',
-    title: 'Your Next Data Challenge',
-    desc: "Looking for a data analyst who delivers clarity from complexity? Let's discuss how I can add value to your team.",
-    href: `mailto:${EMAIL}`, cta: 'Start a Conversation →', external: false, highlight: true,
   },
 ];
 
@@ -390,11 +385,11 @@ function Hero({ onResumeClick }) {
             fill="none" stroke="#00BFA5" strokeWidth="1"/>
         </svg>
         <div className="stat-card">
-          <div className="stat-num">3+</div>
-          <div className="stat-lbl">Years of Industry Experience</div>
+          <div className="stat-num" style={{ fontSize: 'clamp(28px, 4vw, 40px)', lineHeight: 1.2 }}>June 2026</div>
+          <div className="stat-lbl">M.Sc. Data Analytics · UNF Canada</div>
         </div>
         <div className="stat-row">
-          <div className="stat-card sm"><div className="stat-num">10+</div><div className="stat-lbl">Dashboards Built</div></div>
+          <div className="stat-card sm"><div className="stat-num">5+</div><div className="stat-lbl">Dashboards Built</div></div>
           <div className="stat-card sm"><div className="stat-num">5+</div><div className="stat-lbl">Tools Mastered</div></div>
         </div>
         <div className="stat-card stack">
@@ -426,14 +421,53 @@ function About() {
             <div className="about-tag">Smit Jaiswal · Data Analyst</div>
           </div>
           <div className="about-text">
-            <p>I'm a results-driven Data Analyst with a strong foundation in transforming raw, complex data into actionable business intelligence. My work centers on Power BI, DAX, and data modeling — building solutions that empower organizations to make faster, smarter decisions.</p>
-            <p>From designing interactive dashboards to architecting real-time data pipelines using Microsoft Dataverse, I bring both technical depth and a strategic mindset to every project.</p>
-            <p>My background in software development gives me a rare ability to bridge the gap between engineering and analytics — understanding both the data infrastructure and the business impact it drives.</p>
+            <p>I started as a software developer in India — writing production code, debugging systems, and learning what it takes to actually ship software. Three years in, I realized the questions I cared most about weren't in the codebase. They were in the data behind it.</p>
+            <p>So I made the move. Relocated to Canada, enrolled in a Master's in Data Analytics at the University of Niagara Falls, and spent two years going deep on Power BI, DAX, SQL, and machine learning. Along the way I built dashboards that real teams use — not demo projects sitting in a GitHub repo.</p>
+            <p>I graduate in June 2026 and I'm actively looking for a data analyst role where the problems are real and the impact is measurable. I don't just visualize data — I ask why it looks the way it does.</p>
             <div className="skills-wrap">
               <div className="skills-label">Technical Stack</div>
               <div className="skills-grid">
                 {SKILLS.map(s => <span key={s} className="skill">{s}</span>)}
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── EDUCATION ──────────────────────────────────── */
+function Education() {
+  return (
+    <section id="education" className="edu-section">
+      <div className="section-inner">
+        <div className="section-label" style={{ marginBottom: 56 }}>
+          <div className="ln" /><span>Education</span>
+        </div>
+        <h2 className="section-title" style={{ marginBottom: 64 }}>
+          Where I built<br /><em>the foundation</em>
+        </h2>
+        <div className="edu-card">
+          <div className="edu-head">
+            <div className="edu-period">Sep 2024 — Jun 2026</div>
+            <h3 className="edu-degree">Master of Science · Data Analytics</h3>
+            <div className="edu-school">University of Niagara Falls Canada · Ontario, Canada</div>
+          </div>
+          <div className="edu-body">
+            <div className="edu-capstone-label">Capstone Research</div>
+            <div className="edu-capstone-title">
+              Impact of Canadian Permanent Residency Admissions on Macroeconomic Performance (2015–2025)
+            </div>
+            <p className="edu-capstone-desc">
+              Analyzed 132 monthly national observations and 1,319 provincial panel records using cointegration testing,
+              VAR modeling, panel fixed effects, Random Forest, XGBoost, and K-Means clustering (k=3).
+              Built and deployed a multi-tab Streamlit dashboard to Streamlit Community Cloud for public access.
+            </p>
+            <div className="edu-tags">
+              {['Python','Streamlit','VAR Modeling','K-Means Clustering','Random Forest','XGBoost','Panel Fixed Effects','EDA'].map(t => (
+                <span key={t} className="skill">{t}</span>
+              ))}
             </div>
           </div>
         </div>
@@ -587,6 +621,7 @@ export default function App() {
       <main>
         <Hero onResumeClick={openResume} />
         <About />
+        <Education />
         <Experience />
         <Projects />
         <Contact onResumeClick={openResume} />
