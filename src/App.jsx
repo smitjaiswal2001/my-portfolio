@@ -72,6 +72,13 @@ const PROJECTS = [
     href: null, cta: 'Internal Project', external: false,
   },
   {
+    platform: 'Python · Streamlit · Machine Learning',
+    title: 'Canada PR Economic Impact Dashboard',
+    desc: 'Capstone research dashboard analyzing the impact of Canadian permanent residency admissions on macroeconomic performance (2015–2025). Includes VAR modeling, K-Means clustering, Random Forest, and XGBoost across national and provincial datasets.',
+    href: 'https://canada-pr-economic-dashboard-o5br5gcpn2qvitwjwg73qb.streamlit.app/',
+    cta: 'View Dashboard', external: true,
+  },
+  {
     platform: 'Open to Opportunities',
     title: 'Your Next Data Challenge',
     desc: "Looking for a data analyst who delivers clarity from complexity? Let's discuss how I can add value to your team.",
@@ -101,7 +108,7 @@ function Splash({ onDone }) {
         </svg>
       </div>
       <div className="splash-name">Smit Jaiswal</div>
-      <div className="splash-title">Senior Data Analyst</div>
+      <div className="splash-title">Data Analyst</div>
       <div className="splash-bar"><div className="splash-fill" /></div>
     </div>
   );
@@ -353,7 +360,7 @@ function Hero({ onResumeClick }) {
         <div className="hero-eyebrow">
           <div className="ln" />
           <span>
-            <Typewriter words={['Senior Data Analyst','Power BI Specialist','Data Engineer','BI Storyteller']} />
+            <Typewriter words={['Data Analyst','Power BI Specialist','Data Engineer','BI Storyteller']} />
           </span>
         </div>
         <h1 className="hero-name"><strong>Smit</strong>Jaiswal</h1>
